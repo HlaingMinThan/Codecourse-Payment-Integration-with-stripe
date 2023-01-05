@@ -14,6 +14,7 @@
                     x-data="{
                         stripe : null,
                         cardElement : null,
+                        cardError : null,
                         init(){
                             //create a stripe instance
                             this.stripe = Stripe('{{config("stripe.key")}}');
@@ -22,8 +23,9 @@
                             this.cardElement.mount('#card-element')
                         },
                         async submitPayment(){
+                            this.cardError = '';
                             //confirm payment with payment intent client secret
-                            await this.stripe.confirmCardPayment('{{$payment_intent->client_secret}}',{
+                           const {paymentIntent,error} = await this.stripe.confirmCardPayment('{{$payment_intent->client_secret}}',{
                                 payment_method : {
                                     card : this.cardElement,
                                     billing_details : {
@@ -31,11 +33,19 @@
                                     }
                                 }
                             });
-                            console.log('payment finished');
+                            if(error) {
+                                if(error.type === 'card_error') {
+                                    this.cardError = error.message;
+                                }
+                            }else{
+                                console.log('success')
+                            }
                         }
                     }"
                     >
                         <div id="card-element"></div>
+
+                        <div class="my-2 text-xs text-red-500" x-show="cardError" x-text="cardError"></div>
                         <x-primary-button class="mt-3">Make Payment</x-primary-button>
                     </form>
                 </div>

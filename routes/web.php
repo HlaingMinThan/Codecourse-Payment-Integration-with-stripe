@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MemberIndexController;
+use App\Http\Controllers\PaymentIndexController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/members', MemberIndexController::class)->middleware('member');
+
+//payment route
+Route::get('/payment', PaymentIndexController::class)->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -19,6 +19,8 @@ class PaymentIndexController extends Controller
             ]
         ]);
 
-        return view('payments');
+        return view('payments', [
+            'payment_intent' => $paymentIntent
+        ]);
     }
 }

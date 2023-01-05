@@ -10,6 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form
+                    @submit.prevent="submitPayment"
                     x-data="{
                         stripe : null,
                         cardElement : null,
@@ -19,6 +20,18 @@
                             const elements=this.stripe.elements();
                             this.cardElement=elements.create('card',{})
                             this.cardElement.mount('#card-element')
+                        },
+                        async submitPayment(){
+                            //confirm payment with payment intent client secret
+                            await this.stripe.confirmCardPayment('{{$payment_intent->client_secret}}',{
+                                payment_method : {
+                                    card : this.cardElement,
+                                    billing_details : {
+                                        email : '{{auth()->user()->email}}'
+                                    }
+                                }
+                            });
+                            console.log('payment finished');
                         }
                     }"
                     >

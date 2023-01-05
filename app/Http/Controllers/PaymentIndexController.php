@@ -19,6 +19,6 @@ class PaymentIndexController extends Controller
             ]
         ]);
 
-        dd($paymentIntent->client_secret);
+        return view('payments');
     }
 }

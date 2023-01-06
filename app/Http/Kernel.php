@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\RedirectIfMember;
 use App\Http\Middleware\RedirectIfNotMember;
+use App\Http\Middleware\StripeWebhookHeaderCheckMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'member' => RedirectIfNotMember::class,
         'not-member' => RedirectIfMember::class,
+        'stripe-webhook-header' => StripeWebhookHeaderCheckMiddleware::class
     ];
 }

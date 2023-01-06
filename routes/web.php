@@ -32,7 +32,7 @@ Route::get('/members', MemberIndexController::class)->middleware('member');
 Route::get('/payment', PaymentIndexController::class)->middleware(['auth', 'not-member']);
 Route::post('/payments/success', PaymentSuccessController::class)->middleware('auth');
 
-Route::post('/webhooks/stripe', StripeWebhookController::class);
+Route::post('/webhooks/stripe', StripeWebhookController::class)->middleware('stripe-webhook-header');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

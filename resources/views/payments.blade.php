@@ -10,6 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form
+                    action="/payments/success"
+                    method="POST"
                     @submit.prevent="submitPayment"
                     x-data="{
                         stripe : null,
@@ -38,11 +40,12 @@
                                     this.cardError = error.message;
                                 }
                             }else{
-                                console.log('success')
+                               this.$el.submit()
                             }
                         }
                     }"
                     >
+                        @csrf
                         <div id="card-element"></div>
 
                         <div class="my-2 text-xs text-red-500" x-show="cardError" x-text="cardError"></div>

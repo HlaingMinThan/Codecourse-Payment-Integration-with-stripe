@@ -29,7 +29,7 @@ Route::get('/dashboard', function () {
 Route::get('/members', MemberIndexController::class)->middleware('member');
 
 //payment route
-Route::get('/payment', PaymentIndexController::class)->middleware('auth');
+Route::get('/payment', PaymentIndexController::class)->middleware(['auth', 'not-member']);
 Route::post('/payments/success', PaymentSuccessController::class)->middleware('auth');
 
 Route::post('/webhooks/stripe', StripeWebhookController::class);

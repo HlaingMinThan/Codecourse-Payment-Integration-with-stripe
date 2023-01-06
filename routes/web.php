@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MemberIndexController;
 use App\Http\Controllers\PaymentIndexController;
+use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\PaymentSuccessController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,8 @@ Route::get('/members', MemberIndexController::class)->middleware('member');
 //payment route
 Route::get('/payment', PaymentIndexController::class)->middleware('auth');
 Route::post('/payments/success', PaymentSuccessController::class)->middleware('auth');
+
+Route::post('/webhooks/stripe', StripeWebhookController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
